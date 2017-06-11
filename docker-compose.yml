@@ -1,0 +1,117 @@
+# Docker compose for the distributed systems course @2017
+version: '2'
+
+services:
+  # app:
+  #   build: ./docker/nginx
+  #   image: sd/nginx
+  #   container_name: sd_nginx
+  #   volumes:
+  #     - ./.docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+  #     - ./.docker/nginx/conf/sites-enabled:/usr/local/bin/nginx/sites-enabled
+  #   ports:
+  #     - 80
+  #   env_file:
+  #     - ./docker/nginx/.env
+  
+  java:
+    build: ./docker/java
+    image: sd/java
+    container_name: sd_java
+    volumes_from:
+      - code
+    volumes:
+      - ./app:/opt/sd
+
+  tomcat:
+    build: ./docker/tomcat
+    image: sd/tomcat
+    container_name: sd_tomcat
+    volumes_from:
+      - code
+    volumes:
+      - ./app:/usr/local/tomcat/webapps
+
+  mysql:
+    build: ./docker/mysql
+    image: sd/mysql5.7
+    container_name: sd_mysql5.7
+    volumes_from:
+      - dbdata-mysql
+    volumes:
+      - ./docker/database/mysql/data:/var/lib/mysql
+      - ./docker/database/mysql/setup:/docker-entrypoint-initdb.d
+    links:
+      - dbdata-mysql
+    ports:
+      - 3306
+    env_file:
+      - ./docker/mysql/.env
+
+  sql-server:
+    build: ./docker/sql-server
+    image: sd/sql-server
+    container_name: sd_sql_server
+    volumes_from:
+      - dbdata-sqlserver
+    volumes:
+      - ./docker/database/sql-server/data:/var/opt/mssql
+      - ./docker/database/sql-server/setup:/docker-entrypoint-initdb.d
+    links:
+      - dbdata-sqlserver
+    ports:
+      - 1433
+    env_file:
+      - ./docker/sql-server/.env
+
+  postgresql:
+    build: ./docker/postgresql
+    image: sd/postgresql
+    container_name: sd_postgresql
+    volumes_from:
+      - dbdata-postgresql
+    volumes:
+      - ./docker/database/postgresql/data:/var/lib/postgresql/data/pgdata
+      - ./docker/database/postgresql/setup:/docker-entrypoint-initdb.d
+    links:
+      - dbdata-postgresql
+    ports:
+      - 5432
+    env_file:
+      - ./docker/postgresql/.env
+
+  phpmyadmin:
+    build: ./.docker/phpmyadmin
+    image: bmi/phpmyadmin
+    container_name: bmi_m2_phpmyadmin
+    volumes_from:
+      - dbdata-mysql
+    ports:
+      - 8080:80
+    env_file:
+      - ./.docker/phpmyadmin/.env
+
+  dbdata-mysql:
+    image: tianon/true
+    container_name: sd_dbdata_mysql
+    volumes:
+      - /var/lib/mysql
+
+  dbdata-postgresql:
+    image: tianon/true
+    container_name: sd_dbdata_postgresql
+    volumes:
+      - /var/lib/postgresql/data
+
+  dbdata-sqlserver:
+    image: tianon/true
+    container_name: sd_dbdata_sqlserver
+    volumes:
+      - /var/opt/mssql
+
+  code:
+    build: ./docker/setup
+    image: sd/code
+    container_name: sd_code
+    volumes:
+      - ./app:/opt/sd
