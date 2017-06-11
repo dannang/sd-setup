@@ -13,7 +13,5 @@ echo "Database configuration in progress..."
 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -S localhost -U sa -P "${SA_PASSWORD}" -d "${SQLSERVER_DATABASE}"  -Q "EXEC sp_addrolemember N'db_owner', N'${SQLSERVER_USER}';"
 
 echo "Database started"
-
 wait
-
 /usr/local/bin/import-data.sh
