@@ -74,7 +74,7 @@ services:
     volumes_from:
       - dbdata-postgresql
     volumes:
-      - ./docker/database/postgresql/data:/var/lib/postgresql/data/pgdata
+      - ./docker/database/postgresql/data:/var/lib/postgresql/data
       - ./docker/database/postgresql/setup:/docker-entrypoint-initdb.d
     links:
       - dbdata-postgresql

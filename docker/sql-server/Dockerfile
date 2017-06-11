@@ -1,13 +1,11 @@
 FROM microsoft/mssql-server-linux:ctp2-1
 MAINTAINER Dana Negrescu <dana.negrescu@evozon.com>
 
-WORKDIR /tmp
+COPY /bin/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Sqlserver VM
 WORKDIR /sqlserver
-
-COPY bin/entrypoint.sh entrypoint.sh
-RUN chmod u+x entrypoint.sh
-
-ENTRYPOINT [ "/entrypoint.sh" ]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+WIP 
 EXPOSE 1433
