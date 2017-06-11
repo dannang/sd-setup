@@ -60,6 +60,8 @@ services:
     volumes:
       - ./docker/database/sql-server/data:/var/opt/mssql
       - ./docker/database/sql-server/setup:/docker-entrypoint-initdb.d
+      - ./docker/sql-server/bin:/usr/local/bin
+      - ./docker/sql-server/data:/usr/src/data
     links:
       - dbdata-sqlserver
     ports:
