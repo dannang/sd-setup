@@ -31,6 +31,9 @@ services:
       - code
     volumes:
       - ./app:/usr/local/tomcat/webapps
+      - ./docker/tomcat/conf/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+    ports:
+      - 8080
 
   mysql:
     build: ./docker/mysql
@@ -81,15 +84,15 @@ services:
       - ./docker/postgresql/.env
 
   phpmyadmin:
-    build: ./.docker/phpmyadmin
+    build: ./docker/phpmyadmin
     image: bmi/phpmyadmin
     container_name: bmi_m2_phpmyadmin
     volumes_from:
       - dbdata-mysql
     ports:
-      - 8080:80
+      - 80
     env_file:
-      - ./.docker/phpmyadmin/.env
+      - ./docker/phpmyadmin/.env
 
   dbdata-mysql:
     image: tianon/true
@@ -110,8 +113,7 @@ services:
       - /var/opt/mssql
 
   code:
-    build: ./docker/setup
-    image: sd/code
+    image: tianon/true
     container_name: sd_code
     volumes:
       - ./app:/opt/sd
