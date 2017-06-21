@@ -43,7 +43,7 @@ services:
       - dbdata-mysql
     volumes:
       - ./docker/database/mysql/data:/var/lib/mysql
-      - ./docker/database/mysql/setup:/docker-entrypoint-initdb.d
+      - ./docker/mysql/setup:/docker-entrypoint-initdb.d
     links:
       - dbdata-mysql
     ports:

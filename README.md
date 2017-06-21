@@ -21,7 +21,7 @@ sudo docker-compose up sql-server  > logs/sql-server.log 2>&1 &
 sudo docker-compose build postgresql
 sudo docker-compose up postgresql  > logs/postgresql.log 2>&1 &
 ````
-2. Install phpmyadmin (not mandatory)
+2. Install phpmyadmin (will import the db and data via it)
 ````bash
 sudo docker-compose build phpmyadmin
 sudo docker-compose up phpmyadmin > logs/phpmyadmin.log 2>&1 &

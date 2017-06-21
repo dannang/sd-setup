@@ -11,6 +11,7 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 EXPOSE 5432
 
 USER postgres
+
 VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
