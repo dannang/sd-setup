@@ -22,7 +22,7 @@ CREATE TABLE [dbo].[exchange] (
 
 GO
 ALTER TABLE [dbo].[date]
-    ADD CONSTRAINT [idexchnage] FOREIGN KEY ([idexchange]) REFERENCES [dbo].[exchange] ([idexchange]);
+    ADD CONSTRAINT [idexchange] FOREIGN KEY ([idexchange]) REFERENCES [dbo].[exchange] ([idexchange]);
 
 GO
 ALTER TABLE [dbo].[date]

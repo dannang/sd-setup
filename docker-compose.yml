@@ -60,6 +60,7 @@ services:
     volumes:
       - ./docker/database/sql-server/data:/var/opt/mssql
       - ./docker/database/sql-server/setup:/docker-entrypoint-initdb.d
+      - ./docker/sql-server/setup:/usr/src/setup
       - ./docker/sql-server/bin:/usr/local/bin
       - ./docker/sql-server/data:/usr/src/data
     links:
@@ -78,7 +79,9 @@ services:
     volumes:
       - ./docker/database/postgresql/data:/var/lib/postgresql/data
       - ./docker/database/postgresql/setup:/docker-entrypoint-initdb.d
-      - ./docker/postgresql/data/create-table.sql:/docker-entrypoint-initdb.d
+      - ./docker/postgresql/setup:/usr/src/setup
+      - ./docker/postgresql/bin:/usr/local/bin
+      - ./docker/postgresql/data:/usr/src/data
     links:
       - dbdata-postgresql
     ports:
@@ -88,8 +91,8 @@ services:
 
   phpmyadmin:
     build: ./docker/phpmyadmin
-    image: bmi/phpmyadmin
-    container_name: bmi_m2_phpmyadmin
+    image: sd/phpmyadmin
+    container_name: sd_phpmyadmin
     volumes_from:
       - dbdata-mysql
     ports:
