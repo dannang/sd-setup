@@ -2,39 +2,28 @@
 version: '2'
 
 services:
-  # app:
-  #   build: ./docker/nginx
-  #   image: sd/nginx
-  #   container_name: sd_nginx
-  #   links:
-  #   volumes:
-  #     - ./.docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
-  #     - ./.docker/nginx/conf/sites-enabled:/usr/local/bin/nginx/sites-enabled
-  #   ports:
-  #     - 80
-  #   env_file:
-  #     - ./docker/nginx/.env
-  
   java:
     build: ./docker/java
     image: sd/java
     container_name: sd_java
     volumes_from:
       - code
+      - code-server
     volumes:
-      - ./app:/opt/sd
+      - ./app/sd2017:/opt/sd
+      - ./app/web:/usr/local/tomcat/webapps
 
   tomcat:
     build: ./docker/tomcat
     image: sd/tomcat
     container_name: sd_tomcat
     volumes_from:
-      - code
+      - code-server
     volumes:
-      - ./app:/usr/local/tomcat/webapps
+      - ./app/web:/usr/local/tomcat/webapps
       - ./docker/tomcat/conf/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
     ports:
-      - 8080
+      - 9090:8080
 
   mysql:
     build: ./docker/mysql
@@ -123,4 +112,10 @@ services:
     image: tianon/true
     container_name: sd_code
     volumes:
-      - ./app:/opt/sd
+      - ./app/sd2017:/opt/sd
+
+  code-server:
+    image: tianon/true
+    container_name: sd_code_server
+    volumes:
+      - ./app/web:/usr/local/tomcat/webapps
