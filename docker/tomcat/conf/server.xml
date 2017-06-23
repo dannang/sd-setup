@@ -1,13 +1,24 @@
-<!-- Tomcat listen on 8080 -->
-<Connector port="8080" protocol="HTTP/1.1"
-           connectionTimeout="20000"
-           URIEncoding="UTF-8"
-           redirectPort="8443"/>
+<!--&lt;!&ndash; Tomcat listen on 8080 &ndash;&gt;-->
+<!--<Connector port="8080" protocol="HTTP/1.1"-->
+           <!--connectionTimeout="20000"-->
+           <!--URIEncoding="UTF-8"-->
+           <!--redirectPort="8443"/>-->
 
 
-        <!-- Set /apple as default path -->
-<Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="true">
-<Context path="" docBase="sd2017">
-    <WatchedResource>WEB-INF/web.xml</WatchedResource>
-</Context>
+        <!--&lt;!&ndash; Set /apple as default path &ndash;&gt;-->
+<!--<Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="true">-->
+<!--<Context path="" docBase="sd2017">-->
+    <!--<Alias>www.blah.com</Alias>-->
+    <!--<WatchedResource>WEB-INF/web.xml</WatchedResource>-->
+<!--</Context>-->
+<!--</Host>-->
+
+<Engine name="Catalina" defaultHost="localhost">
+<Host name="localhost"  appBase="webapps"
+      unpackWARs="true" autoDeploy="true">
 </Host>
+<Host name="sd2017.dev" appBase="web"
+      unpackWARS="true" autoDeploy="true">
+    <Alias>www.sd2017.dev</Alias>
+</Host>
+</Engine>
